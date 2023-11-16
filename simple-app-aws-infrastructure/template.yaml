@@ -6,7 +6,8 @@ metadata:
   description: Create a New App in AWS
   tags:
     - python
-    - app
+    - terraform
+    - aws
 spec:
   owner: ldtoan1306@gmail.com
   type: service
@@ -53,7 +54,7 @@ spec:
       name: Fetch Skeleton + Template
       action: fetch:template
       input:
-        url: ./skeleton
+        url: ./template
         copyWithoutRender:
           - .github/workflows/*
         values:
