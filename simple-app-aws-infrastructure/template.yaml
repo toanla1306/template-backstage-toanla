@@ -1,4 +1,4 @@
-apiVersion: scaffolder.backstage.io/v1beta2
+apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: simple-app-aws-infrastructure
@@ -52,7 +52,7 @@ spec:
   steps:
     - id: template
       name: Fetch Skeleton + Template
-      action: fetch:cookiecutter
+      action: fetch:template
       input:
         url: ./template
         copyWithoutRender:
