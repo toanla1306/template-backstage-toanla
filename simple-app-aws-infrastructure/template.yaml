@@ -52,7 +52,7 @@ spec:
   steps:
     - id: template
       name: Fetch Skeleton + Template
-      action: fetch:template
+      action: fetch:cookiecutter
       input:
         url: ./template
         copyWithoutRender:
