@@ -6,6 +6,6 @@ metadata:
   annotations:
     aws.amazon.com/aws-codepipeline: arn:aws:codepipeline:us-east-1:837472653674:backstage-toanla
 spec:
-  type: infrastructure
-  owner: ldtoan1306@gmail.com
-  lifecycle: production
+  type: service
+  owner: user:guest
+  lifecycle: experimental
