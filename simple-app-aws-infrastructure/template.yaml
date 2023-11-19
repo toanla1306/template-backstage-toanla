@@ -41,6 +41,8 @@ spec:
     - title: Choose a location
       required:
         - repoUrl
+        - aws_id
+        - aws_secret
       properties:
         repoUrl:
           title: Repository Location
@@ -49,6 +51,15 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
+        aws_id:
+          title: AWS ID
+          type: string
+          ui:widget: password # will print '******' as value for property 'password' on Review Step
+        aws_secret:
+          title: AWS Secret
+          type: string
+          ui:widget: password # will print '******' as value for property 'password' on Review Step
+
   steps:
     - id: template
       name: Fetch Skeleton + Template
@@ -72,6 +83,9 @@ spec:
           - github.com
         description: This is ${{ parameters.application_name }}
         repoUrl: ${{ parameters.repoUrl }}
+        secrets:
+          AWS_ID: ${{ parameters.aws_id }}
+          AWS_SECRET: ${{ parameters.aws_secret }}
 
     - id: register
       name: Register

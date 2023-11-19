@@ -10,7 +10,7 @@ resource "aws_amplify_app" "my_amplify_app" {
           commands:
             - echo "build frontend"
       artifacts:
-        baseDirectory: /
+        baseDirectory: application
         files:
           - '**/*'
   EOT

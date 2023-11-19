@@ -4,7 +4,8 @@ metadata:
   name: backstage
   description: An example of a Backstage application.
   annotations:
-    aws.amazon.com/aws-codepipeline: arn:aws:codepipeline:us-east-1:837472653674:backstage-toanla
+    github.com/project-slug: ${{ values.destination.owner + "/" + values.destination.repo }}
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
   owner: user:guest
