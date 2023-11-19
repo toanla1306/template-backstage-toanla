@@ -1,0 +1,87 @@
+name: Deploy Infrastructure
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'infrastructure/**'
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
+
+jobs:
+  git2s3:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infrastructure/cloudformation
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    # - name: Install GitHub CLI
+    #   run: |
+    #     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+    #     sudo apt-add-repository https://cli.github.com/packages
+    #     sudo apt-get update
+    #     sudo apt-get install gh
+
+    # - name: Authenticate with GitHub CLI
+    #   run: gh auth login --with-token <<< ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Deploy CloudFormation stack
+      run: |
+        aws cloudformation deploy \
+          --template-file git2s3.yaml \
+          --stack-name git2s3-${{ vars.NAME_APPLICATION }} \
+          --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM
+
+    # - name: Get Value Git Pull Web Hook API
+    #   run: |
+    #     aws cloudformation describe-stacks \
+    #       --stack-name test123 \
+    #       --query 'Stacks[0].Outputs[?OutputKey==`GitPullWebHookApi`].OutputValue' \
+    #       --output text
+
+    # - name: Get Public SSH Key
+    #   run: |
+    #     aws cloudformation describe-stacks \
+    #       --stack-name test123 \
+    #       --query 'Stacks[0].Outputs[?OutputKey==`PublicSSHKey`].OutputValue' \
+    #       --output text > PublicSSHKey.pub
+
+    - name: Bucket Git2S3
+      run: |
+        Bucket_Git2S3=$(aws cloudformation describe-stacks \
+          --stack-name test123 \
+          --query 'Stacks[0].Outputs[?OutputKey==`OutputBucketName`].OutputValue' \
+          --output text)
+        
+        echo "Bucket_Git2S3=$Bucket_Git2S3" >> $GITHUB_ENV
+
+  deploy_codepipeline:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infrastructure/terraform
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.14.7
+
+    - name: Initialization Terraform
+      run: terraform init
+    
+    - name: Validate Terraform configuration
+      run: terraform validate
+
+    - name: Deploy Terraform
+      run: terraform apply -auto-approve
