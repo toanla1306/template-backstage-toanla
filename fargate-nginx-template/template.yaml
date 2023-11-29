@@ -17,6 +17,8 @@ spec:
       required:
         - component_id
         - owner
+        - aws_account_id
+        - aws_region
         - initial_message
       properties:
         component_id:
@@ -40,6 +42,12 @@ spec:
           title: Initial message
           type: string
           description: Initial message to display on the website ('Hello world!')
+        aws_account_id:
+          title: AWS Account ID
+          type: string
+        aws_region:
+          title: AWS Region
+          type: string
     - title: Choose a location
       required:
         - repoUrl
@@ -69,9 +77,9 @@ spec:
           aws_proton_dev_environment_name: "backstage-proton-plugins-tutorial-env"
           aws_proton_prod_environment_name: "backstage-proton-plugins-tutorial-env"
           # The AWS account where the Proton service will be created
-          aws_account_id: "111111111111"
+          aws_account_id: ${{ parameters.aws_account_id }}
           # The AWS region where the Proton service will be created
-          aws_region: us-east-1
+          aws_region: ${{ parameters.aws_region }}
 
     - id: publish
       name: Publish
