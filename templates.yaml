@@ -7,3 +7,4 @@ spec:
   targets:
     - ./simple-app-amplify/template.yaml
     - ./simple-app-codepipeline/template.yaml
+    - ./fargate-nginx-template
