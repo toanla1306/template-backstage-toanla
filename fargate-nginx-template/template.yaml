@@ -52,6 +52,7 @@ spec:
       required:
         - repoUrl
         - repositoryConnectionArn
+        - templateMajorVersion
       properties:
         repoUrl:
           title: Repository Location
@@ -62,6 +63,9 @@ spec:
               - github.com
         repositoryConnectionArn:
           title: Repository Connection ARN
+          type: string
+        templateMajorVersion:
+          title: Template Major Version
           type: string
 
   steps:
@@ -107,7 +111,7 @@ spec:
         # Update the following fields to match the resources in your AWS account
         region: ${{ parameters.aws_region }}
         templateName: backend-fargate-svc
-        templateMajorVersion: '1'
+        templateMajorVersion: ${{ parameters.templateMajorVersion }}
         repositoryConnectionArn: ${{ parameters.repositoryConnectionArn }}
 
     - id: register
