@@ -2,6 +2,7 @@ proton: ServiceSpec
 
 pipeline:
   service_dir: "."
+  dockerfile: Dockerfile
   unit_test_command: "./run-tests.sh"
 
 instances:

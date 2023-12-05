@@ -1,3 +1,5 @@
-FROM public.ecr.aws/nginx/nginx:1.21
+FROM python:3.8.3-slim-buster
+COPY app.py requirements.txt ./
+RUN pip install -r requirements.txt
 EXPOSE 80
-COPY index.html /usr/share/nginx/html
+CMD [ "python", "app.py"]

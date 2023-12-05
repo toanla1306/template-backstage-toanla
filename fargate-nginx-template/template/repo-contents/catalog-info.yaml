@@ -9,6 +9,7 @@ metadata:
     github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
     backstage.io/techdocs-ref: dir:.
     aws.amazon.com/aws-proton-service: arn:aws:proton:${{values.aws_region}}:${{values.aws_account_id}}:service/${{values.component_id}}
+    # aws.amazon.com/aws-codepipeline: arn:aws:codepipeline:${{ values.aws_region }}:${{ values.aws_account_id }}:${{ values.component_id }}
 spec:
   type: service
   lifecycle: experimental

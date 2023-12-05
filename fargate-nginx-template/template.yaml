@@ -1,12 +1,12 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: fargate-nginx-template
-  title: Nginx Fargate Web Service
-  description: Create a simple website using Nginx and AWS Fargate
+  name: fargate-python-template
+  title: Python Web Service Using Fargate
+  description: Create a simple website using Python and AWS Fargate
   tags:
     - recommended
-    - nginx
+    - python
     - fargate
 spec:
   owner: service@example.com
@@ -78,8 +78,8 @@ spec:
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
           http_port: 80
           # The AWS Proton environments to use for deploying the initial service instances
-          aws_proton_dev_environment_name: "backstage-proton-plugins-tutorial-env"
-          aws_proton_prod_environment_name: "backstage-proton-plugins-tutorial-env"
+          aws_proton_dev_environment_name: "fargate-env-prod"
+          aws_proton_prod_environment_name: "fargate-env-prod"
           # The AWS account where the Proton service will be created
           aws_account_id: ${{ parameters.aws_account_id }}
           # The AWS region where the Proton service will be created
@@ -105,8 +105,8 @@ spec:
         branchName: main
         serviceSpecPath: ./spec.yaml
         # Update the following fields to match the resources in your AWS account
-        region: us-east-1
-        templateName: load-balanced-fargate-svc
+        region: ${{ parameters.aws_region }}
+        templateName: backend-fargate-svc
         templateMajorVersion: '1'
         repositoryConnectionArn: ${{ parameters.repositoryConnectionArn }}
 
